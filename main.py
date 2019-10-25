@@ -20,8 +20,9 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         #FIXME при change edit_line, но по заданию не так. 
         #Уточнить, зачем в контроллер передавать edit_line - это просто привязка к си шарпу? 
         #ПОПРОСИТЬ ОБЪЯСНИТЬ ВСЮ СТРУКТУРУ КОНТРОЛЛЕРА ЗАНОВО
-        
-
+        pass
+    
+    
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = Controller()  # Создаём объект класса Controller

@@ -11,3 +11,4 @@ class OperationsManager():
 
     def operations_load(self, path):
         #FIXME задание не понятно
+        pass
