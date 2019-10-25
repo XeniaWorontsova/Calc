@@ -16,10 +16,10 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         while i < count:
             self.comboBox.addItem(self.operations_manager.get_operation(i))
 
-    def check_operand():
-        '''при change edit_line, но по заданию не так. 
-        Уточнить, зачем в контроллер передавать edit_line - это просто привязка к си шарпу? 
-        ПОПРОСИТЬ ОБЪЯСНИТЬ ВСЮ СТРУКТУРУ КОНТРОЛЛЕРА ЗАНОВО'''
+    def check_operand(self):
+        #FIXME при change edit_line, но по заданию не так. 
+        #Уточнить, зачем в контроллер передавать edit_line - это просто привязка к си шарпу? 
+        #ПОПРОСИТЬ ОБЪЯСНИТЬ ВСЮ СТРУКТУРУ КОНТРОЛЛЕРА ЗАНОВО
         
 
 def main():

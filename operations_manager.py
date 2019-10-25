@@ -10,4 +10,4 @@ class OperationsManager():
         return self.__operations_count
 
     def operations_load(self, path):
-        '''задание не понятно'''
+        #FIXME задание не понятно
