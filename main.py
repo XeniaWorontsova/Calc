@@ -9,19 +9,18 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         super().__init__()
         self.setupUi(self)
         self.operations_manager = OperationsManager()
+        self.operations_manager.operations_load('/home/ksenia/Desktop/Calc/operations')
+        self.make_list_operations()
 
     def make_list_operations(self):
-        count = self.operations_manager.get_operations_count
+        count = self.operations_manager.get_operations_count()
         i = 0
         while i < count:
-            self.comboBox.addItem(self.operations_manager.get_operation(i))
+            self.comboBox.addItem(self.operations_manager.get_operation(i).get_name_operation())
+            i = i + 1
 
     def check_operand(self):
-        #FIXME при change edit_line, но по заданию не так. 
-        #Уточнить, зачем в контроллер передавать edit_line - это просто привязка к си шарпу? 
-        #ПОПРОСИТЬ ОБЪЯСНИТЬ ВСЮ СТРУКТУРУ КОНТРОЛЛЕРА ЗАНОВО
         pass
-    
     
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication

@@ -15,16 +15,11 @@ class OperationsManager():
         return self.__operations[number]
 
     def get_operations_count(self):
-        return self.__operations_count
+        return len(self.__operations)
 
     def operations_load(self, path):
         for filename in glob.glob(os.path.join(path, '*.py')):
-            print(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
             module = importlib.import_module(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
-            print(dir(module))
             for name, obj in inspect.getmembers(module):
                 if inspect.isclass(obj) and IOperation.providedBy(obj()):
                     self.__operations.append(obj())
-
-
-OperationsManager().operations_load('/home/ksenia/Desktop/Calc/operations')
