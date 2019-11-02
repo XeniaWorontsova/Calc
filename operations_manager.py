@@ -1,3 +1,11 @@
+import sys, inspect, glob, os
+from zope.interface.verify import verifyObject
+from zope.interface import providedBy
+from operations.interface_operation import IOperation
+import pyclbr
+import importlib
+import inspect
+
 class OperationsManager():
     def __init__(self):
         self.__operations = []
@@ -10,5 +18,13 @@ class OperationsManager():
         return self.__operations_count
 
     def operations_load(self, path):
-        #FIXME задание не понятно
-        pass
+        for filename in glob.glob(os.path.join(path, '*.py')):
+            print(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
+            module = importlib.import_module(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
+            print(dir(module))
+            for name, obj in inspect.getmembers(module):
+                if inspect.isclass(obj) and IOperation.providedBy(obj()):
+                    self.__operations.append(obj())
+
+
+OperationsManager().operations_load('/home/ksenia/Desktop/Calc/operations')
