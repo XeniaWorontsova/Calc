@@ -11,6 +11,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         self.operations_manager = OperationsManager()
         self.operations_manager.operations_load('/home/ksenia/Desktop/Calc/operations')
         self.make_list_operations()
+        self.selected_operation()
         self.comboBox.currentIndexChanged.connect(self.selected_operation)
 
     def make_list_operations(self):
@@ -26,9 +27,12 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
     def selected_operation(self):
         operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
         if operation.get_count_of_operands() == 1:
+            self.lineEdit.setPlaceholderText(operation.get_name_operand(0))
             self.lineEdit_2.hide()
             self.pushButton_2.hide()
         elif operation.get_count_of_operands() == 2:
+            self.lineEdit.setPlaceholderText(operation.get_name_operand(0))
+            self.lineEdit_2.setPlaceholderText(operation.get_name_operand(1))
             self.lineEdit_2.show()
             self.pushButton_2.show()
     
