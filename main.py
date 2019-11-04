@@ -15,6 +15,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         self.comboBox.currentIndexChanged.connect(self.selected_operation)
         self.lineEdit.textChanged.connect(self.check_operand)
         self.lineEdit_2.textChanged.connect(self.check_operand)
+        self.pushButton_3.clicked.connect(self.calculate)
 
     def make_list_operations(self):
         count = self.operations_manager.get_operations_count()
@@ -24,7 +25,6 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
             i = i + 1
 
     def check_operand(self):
-        operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
         try:
             if self.lineEdit.text() != "":
                 float(self.lineEdit.text())
@@ -32,7 +32,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         except:
             self.lineEdit.setStyleSheet("QLineEdit {background-color:red}")
             self.lineEdit.setText("число")
-        if operation.get_count_of_operands() == 2:
+        if self.operation.get_count_of_operands() == 2:
             try:
                 if self.lineEdit_2.text() != "":
                     float(self.lineEdit_2.text())
@@ -44,16 +44,22 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
 
 
     def selected_operation(self):
-        operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
-        if operation.get_count_of_operands() == 1:
-            self.lineEdit.setPlaceholderText(operation.get_name_operand(0))
+        self.operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
+        if self.operation.get_count_of_operands() == 1:
+            self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
             self.lineEdit_2.hide()
             self.pushButton_2.hide()
-        elif operation.get_count_of_operands() == 2:
-            self.lineEdit.setPlaceholderText(operation.get_name_operand(0))
-            self.lineEdit_2.setPlaceholderText(operation.get_name_operand(1))
+        elif self.operation.get_count_of_operands() == 2:
+            self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
+            self.lineEdit_2.setPlaceholderText(self.operation.get_name_operand(1))
             self.lineEdit_2.show()
             self.pushButton_2.show()
+
+    def calculate(self):
+        if self.operation.get_count_of_operands() == 1:
+            self.lineEdit_3.setText(str(self.operation.calculate([float(self.lineEdit.text())])))
+        elif self.operation.get_count_of_operands() == 2:
+            self.lineEdit_3.setText(str(self.operation.calculate([float(self.lineEdit.text())] + [float(self.lineEdit_2.text())])))
     
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
