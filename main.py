@@ -47,7 +47,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
 
     def selected_operation(self):
         self.operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
-        if self.operation.get_count_of_operands() == 1:24.024.0
+        if self.operation.get_count_of_operands() == 1:
             try:
                 self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
             except exceptions.OperationErrorException:
