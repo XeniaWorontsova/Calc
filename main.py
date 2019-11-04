@@ -18,6 +18,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         self.pushButton_3.clicked.connect(self.calculate)
         self.pushButton.clicked.connect(lambda: self.copy(1))
         self.pushButton_2.clicked.connect(lambda: self.copy(2))
+        self.lineEdit_3.setReadOnly(True)
 
     def make_list_operations(self):
         count = self.operations_manager.get_operations_count()
