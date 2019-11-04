@@ -1,8 +1,8 @@
 import sys
 from design import Ui_Form
 from operations_manager import OperationsManager
-import operations.exceptions as exceptions
 from PyQt5 import QtWidgets
+import operations.exceptions as exceptions
 
 
 class Controller(QtWidgets.QMainWindow, Ui_Form):
@@ -10,7 +10,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         super().__init__()
         self.setupUi(self)
         self.operations_manager = OperationsManager()
-        self.operations_manager.operations_load('/home/ksenia/Desktop/Calc/operations')
+        self.operations_manager.operations_load('operations')
         self.make_list_operations()
         self.selected_operation()
         self.comboBox.currentIndexChanged.connect(self.selected_operation)
