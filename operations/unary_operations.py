@@ -1,7 +1,7 @@
 from zope.interface import implementer
 from operations.interface_operation import IOperation
+import operations.exceptions as exceptions
 import math
-
 
 @implementer(IOperation)
 class Percent():
@@ -15,6 +15,8 @@ class Percent():
         return self.__name
 
     def get_name_operand(self, operand_number):
+        if (operand_number >= self.__operands_count):
+            raise exceptions.OperationErrorException
         return self.__name_operands[operand_number]
 
     def get_count_of_operands(self):
@@ -36,6 +38,8 @@ class Power():
         return self.__name
 
     def get_name_operand(self, operand_number):
+        if (operand_number >= self.__operands_count):
+            raise exceptions.OperationErrorException
         return self.__name_operands[operand_number]
 
     def get_count_of_operands(self):
@@ -57,6 +61,8 @@ class SquareRoot():
         return self.__name
 
     def get_name_operand(self, operand_number):
+        if (operand_number >= self.__operands_count):
+            raise exceptions.OperationErrorException
         return self.__name_operands[operand_number]
 
     def get_count_of_operands(self):

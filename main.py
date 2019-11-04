@@ -1,6 +1,7 @@
 import sys
 from design import Ui_Form
 from operations_manager import OperationsManager
+import operations.exceptions as exceptions
 from PyQt5 import QtWidgets
 
 
@@ -44,17 +45,24 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
                 self.lineEdit_2.setStyleSheet("QLineEdit {background-color:red}")
                 self.lineEdit_2.setText("число")
 
-
-
     def selected_operation(self):
         self.operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
-        if self.operation.get_count_of_operands() == 1:
-            self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
+        if self.operation.get_count_of_operands() == 1:24.024.0
+            try:
+                self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
+            except exceptions.OperationErrorException:
+                self.lineEdit.setPlaceholderText("")
             self.lineEdit_2.hide()
             self.pushButton_2.hide()
         elif self.operation.get_count_of_operands() == 2:
-            self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
-            self.lineEdit_2.setPlaceholderText(self.operation.get_name_operand(1))
+            try:
+                self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
+            except exceptions.OperationErrorException:
+                self.lineEdit.setPlaceholderText("")
+            try:
+                self.lineEdit_2.setPlaceholderText(self.operation.get_name_operand(1))
+            except exceptions.OperationErrorException:
+                self.lineEdit_2.setPlaceholderText("")
             self.lineEdit_2.show()
             self.pushButton_2.show()
 
