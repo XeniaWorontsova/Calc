@@ -16,6 +16,8 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         self.lineEdit.textChanged.connect(self.check_operand)
         self.lineEdit_2.textChanged.connect(self.check_operand)
         self.pushButton_3.clicked.connect(self.calculate)
+        self.pushButton.clicked.connect(lambda: self.copy(1))
+        self.pushButton_2.clicked.connect(lambda: self.copy(2))
 
     def make_list_operations(self):
         count = self.operations_manager.get_operations_count()
@@ -60,6 +62,14 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
             self.lineEdit_3.setText(str(self.operation.calculate([float(self.lineEdit.text())])))
         elif self.operation.get_count_of_operands() == 2:
             self.lineEdit_3.setText(str(self.operation.calculate([float(self.lineEdit.text())] + [float(self.lineEdit_2.text())])))
+
+    def copy(self, index):
+        if index == 1:
+            self.lineEdit.setText(self.lineEdit_3.text())
+        else:
+            self.lineEdit_2.setText(self.lineEdit_3.text())
+        self.lineEdit_3.setText("")
+
     
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
