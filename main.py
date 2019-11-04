@@ -30,7 +30,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
 
     def check_operand(self):
         try:
-            if self.lineEdit.text() != "":
+            if self.lineEdit.text() != '' and self.lineEdit.text() != '-':
                 float(self.lineEdit.text())
             self.lineEdit.setStyleSheet("QLineEdit {background-color:white}")
         except:
@@ -67,12 +67,24 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
             self.pushButton_2.show()
 
     def calculate(self):
-        if self.operation.get_count_of_operands() == 1:
-            self.lineEdit_3.setText(str(self.operation.calculate([float(self.lineEdit.text())])))
-        elif self.operation.get_count_of_operands() == 2:
-            self.lineEdit_3.setText(str(self.operation.calculate([float(self.lineEdit.text())] + [float(self.lineEdit_2.text())])))
+        try:
+            if self.operation.get_count_of_operands() == 1:
+                self.lineEdit_3.setText(str(self.operation.calculate([self.lineEdit.text()])))
+            elif self.operation.get_count_of_operands() == 2:
+                self.lineEdit_3.setText(str(self.operation.calculate([self.lineEdit.text()] + [self.lineEdit_2.text()])))
+            self.lineEdit_3.setStyleSheet("QLineEdit {background-color:white}")
+        except exceptions.OperationErrorException:
+            self.lineEdit_3.setText("На ноль делить нельзя!")
+            self.lineEdit_3.setStyleSheet("QLineEdit {background-color:red}")
+        except exceptions.InvalidOperandException:
+            self.lineEdit_3.setText("Введите корректные операнды")
+            self.lineEdit_3.setStyleSheet("QLineEdit {background-color:red}")
 
     def copy(self, index):
+        try:
+            float(self.lineEdit_3.text())
+        except:
+            return
         if index == 1:
             self.lineEdit.setText(self.lineEdit_3.text())
         else:

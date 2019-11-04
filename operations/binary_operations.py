@@ -22,7 +22,10 @@ class Addition():
         return self.__operands_count
 
     def calculate(self, operands):
-        return operands[0] + operands[1]
+        try:
+            return float(operands[0]) + float(operands[1])
+        except ValueError:
+            raise exceptions.InvalidOperandException
 
 
 @implementer(IOperation)
@@ -37,7 +40,7 @@ class Division():
         return self.__name
 
     def get_name_operand(self, operand_number):
-        if (operand_number >= self.__operands_count):
+        if operand_number >= self.__operands_count:
             raise exceptions.OperationErrorException
         return self.__name_operands[operand_number]
 
@@ -45,8 +48,13 @@ class Division():
         return self.__operands_count
 
     def calculate(self, operands):
-        #FIXME уточнить про исключения
-        return operands[0] / operands[1]
+        try:
+            return float(operands[0]) / float(operands[1])
+        except ValueError:
+            raise exceptions.InvalidOperandException
+        except ZeroDivisionError:
+            raise exceptions.OperationErrorException
+
 
 
 @implementer(IOperation)
@@ -69,7 +77,10 @@ class Multiplication():
         return self.__operands_count
 
     def calculate(self, operands):
-        return operands[0] * operands[1]
+        try:
+            return float(operands[0]) * float(operands[1])
+        except ValueError:
+            raise exceptions.InvalidOperandException
 
 
 @implementer(IOperation)
@@ -92,4 +103,33 @@ class Subtraction():
         return self.__operands_count
 
     def calculate(self, operands):
-        return operands[0] - operands[1]
+        try:
+            return float(operands[0]) - float(operands[1])
+        except ValueError:
+            raise exceptions.InvalidOperandException
+
+
+@implementer(IOperation)
+class Power():
+
+    def __init__(self):
+        self.__name = 'Степень'
+        self.__operands_count = 2
+        self.__name_operands = {0: 'Число', 1: 'Степень'}
+
+    def get_name_operation(self):
+        return self.__name
+
+    def get_name_operand(self, operand_number):
+        if (operand_number >= self.__operands_count):
+            raise exceptions.OperationErrorException
+        return self.__name_operands[operand_number]
+
+    def get_count_of_operands(self):
+        return self.__operands_count
+
+    def calculate(self, operands):
+        try:
+            return float(operands[0]) ** float(operands[1])
+        except ValueError:
+            raise exceptions.InvalidOperandException
