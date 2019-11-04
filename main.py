@@ -13,6 +13,8 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         self.make_list_operations()
         self.selected_operation()
         self.comboBox.currentIndexChanged.connect(self.selected_operation)
+        self.lineEdit.textChanged.connect(self.check_operand)
+        self.lineEdit_2.textChanged.connect(self.check_operand)
 
     def make_list_operations(self):
         count = self.operations_manager.get_operations_count()
@@ -22,7 +24,24 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
             i = i + 1
 
     def check_operand(self):
-        return self.comboBox.itemData().currentIndex()
+        operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
+        try:
+            if self.lineEdit.text() != "":
+                float(self.lineEdit.text())
+            self.lineEdit.setStyleSheet("QLineEdit {background-color:white}")
+        except:
+            self.lineEdit.setStyleSheet("QLineEdit {background-color:red}")
+            self.lineEdit.setText("число")
+        if operation.get_count_of_operands() == 2:
+            try:
+                if self.lineEdit_2.text() != "":
+                    float(self.lineEdit_2.text())
+                self.lineEdit_2.setStyleSheet("QLineEdit {background-color:white}")
+            except:
+                self.lineEdit_2.setStyleSheet("QLineEdit {background-color:red}")
+                self.lineEdit_2.setText("число")
+
+
 
     def selected_operation(self):
         operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
