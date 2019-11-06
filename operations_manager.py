@@ -18,9 +18,12 @@ class OperationsManager():
         return len(self.__operations)
 
     def operations_load(self, path):
+        sep = '/'
+        if sys.platform == 'win32' or sys.platform == 'cygwin':
+            sep = '\\'
         for filename in glob.glob(os.path.join(path, '*.py')):
             try:
-                module = importlib.import_module(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
+                module = importlib.import_module(filename.split(sep)[-2] +'.' + filename.split(sep)[-1].split('.')[0])
                 for name, obj in inspect.getmembers(module):
                     try:
                         if inspect.isclass(obj) and IOperation.providedBy(obj()):
