@@ -19,7 +19,13 @@ class OperationsManager():
 
     def operations_load(self, path):
         for filename in glob.glob(os.path.join(path, '*.py')):
-            module = importlib.import_module(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
-            for name, obj in inspect.getmembers(module):
-                if inspect.isclass(obj) and IOperation.providedBy(obj()):
-                    self.__operations.append(obj())
+            try:
+                module = importlib.import_module(filename.split('/')[-2] +'.' + filename.split('/')[-1].split('.')[0])
+                for name, obj in inspect.getmembers(module):
+                    try:
+                        if inspect.isclass(obj) and IOperation.providedBy(obj()):
+                            self.__operations.append(obj())
+                    except:
+                        continue
+            except:
+                continue
