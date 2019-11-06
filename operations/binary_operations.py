@@ -22,10 +22,9 @@ class Addition():
         return self.__operands_count
 
     def calculate(self, operands):
-        try:
-            return float(operands[0]) + float(operands[1])
-        except ValueError:
+        if len(operands) > self.__operands_count:
             raise exceptions.InvalidOperandException
+        return float(operands[0]) + float(operands[1])
 
 
 @implementer(IOperation)
@@ -48,12 +47,9 @@ class Division():
         return self.__operands_count
 
     def calculate(self, operands):
-        try:
-            return float(operands[0]) / float(operands[1])
-        except ValueError:
+        if len(operands) > self.__operands_count:
             raise exceptions.InvalidOperandException
-        except ZeroDivisionError:
-            raise exceptions.OperationErrorException
+        return float(operands[0]) / float(operands[1])
 
 
 
@@ -77,10 +73,9 @@ class Multiplication():
         return self.__operands_count
 
     def calculate(self, operands):
-        try:
-            return float(operands[0]) * float(operands[1])
-        except ValueError:
+        if len(operands) > self.__operands_count:
             raise exceptions.InvalidOperandException
+        return float(operands[0]) * float(operands[1])
 
 
 @implementer(IOperation)
@@ -103,10 +98,9 @@ class Subtraction():
         return self.__operands_count
 
     def calculate(self, operands):
-        try:
-            return float(operands[0]) - float(operands[1])
-        except ValueError:
+        if len(operands) > self.__operands_count:
             raise exceptions.InvalidOperandException
+        return float(operands[0]) - float(operands[1])
 
 
 @implementer(IOperation)
@@ -129,7 +123,6 @@ class Power():
         return self.__operands_count
 
     def calculate(self, operands):
-        try:
-            return float(operands[0]) ** float(operands[1])
-        except ValueError:
+        if len(operands) > self.__operands_count:
             raise exceptions.InvalidOperandException
+        return float(operands[0]) ** float(operands[1])

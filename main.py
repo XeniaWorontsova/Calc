@@ -17,6 +17,7 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
         self.lineEdit.textChanged.connect(self.check_operand)
         self.lineEdit_2.textChanged.connect(self.check_operand)
         self.pushButton_3.clicked.connect(self.calculate)
+        self.pushButton_3.setEnabled(False)
         self.pushButton.clicked.connect(lambda: self.copy(1))
         self.pushButton_2.clicked.connect(lambda: self.copy(2))
         self.lineEdit_3.setReadOnly(True)
@@ -61,6 +62,10 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
 
     def selected_operation(self):
         self.operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
+        self.lineEdit.setText('')
+        self.lineEdit_2.setText('')
+        self.lineEdit_3.setText('')
+        self.pushButton_3.setEnabled(False)
         if self.operation.get_count_of_operands() == 1:
             try:
                 self.lineEdit.setPlaceholderText(self.operation.get_name_operand(0))
@@ -83,15 +88,20 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
     def calculate(self):
         try:
             if self.operation.get_count_of_operands() == 1:
+                if not self.lineEdit.text():
+                    self.lineEdit_3.setText("Ошибка!")
+                    self.lineEdit_3.setStyleSheet("QLineEdit {background-color:red}")
+                    return
                 self.lineEdit_3.setText(str(self.operation.calculate([self.lineEdit.text()])))
             elif self.operation.get_count_of_operands() == 2:
+                if not self.lineEdit.text() or not self.lineEdit_2.text():
+                    self.lineEdit_3.setText("Ошибка!")
+                    self.lineEdit_3.setStyleSheet("QLineEdit {background-color:red}")
+                    return
                 self.lineEdit_3.setText(str(self.operation.calculate([self.lineEdit.text()] + [self.lineEdit_2.text()])))
             self.lineEdit_3.setStyleSheet("QLineEdit {background-color:white}")
         except exceptions.OperationErrorException:
-            self.lineEdit_3.setText("На ноль делить нельзя!")
-            self.lineEdit_3.setStyleSheet("QLineEdit {background-color:red}")
-        except exceptions.InvalidOperandException:
-            self.lineEdit_3.setText("Введите корректные операнды")
+            self.lineEdit_3.setText("Ошибка!")
             self.lineEdit_3.setStyleSheet("QLineEdit {background-color:red}")
 
     def copy(self, index):

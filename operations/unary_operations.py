@@ -23,10 +23,9 @@ class Percent():
         return self.__operands_count
 
     def calculate(self, operands):
-        try:
-            return float(operands[0]) / 100
-        except ValueError:
+        if len(operands) > self.__operands_count:
             raise exceptions.InvalidOperandException
+        return float(operands[0]) / 100
 
 
 @implementer(IOperation)
@@ -49,7 +48,9 @@ class SquareRoot():
         return self.__operands_count
 
     def calculate(self, operands):
+        if len(operands) > self.__operands_count:
+            raise exceptions.InvalidOperandException
         try:
             return math.sqrt(float(operands[0]))
-        except ValueError:
-            raise exceptions.InvalidOperandException
+        except:
+            raise exceptions.OperationErrorException
