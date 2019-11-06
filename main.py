@@ -29,21 +29,35 @@ class Controller(QtWidgets.QMainWindow, Ui_Form):
             i = i + 1
 
     def check_operand(self):
+        button_blocked = False
         try:
-            if self.lineEdit.text() != '' and self.lineEdit.text() != '-':
-                float(self.lineEdit.text())
+            text = self.lineEdit.text()
+            if text == 'nan' or text == 'inf':
+                raise exceptions.InvalidOperandException
+            if text != '-' and text != '':
+                float(text)
             self.lineEdit.setStyleSheet("QLineEdit {background-color:white}")
+            self.pushButton_3.setEnabled(True)
         except:
             self.lineEdit.setStyleSheet("QLineEdit {background-color:red}")
             self.lineEdit.setText("число")
+            self.pushButton_3.setEnabled(False)
+            button_blocked = True
+            
         if self.operation.get_count_of_operands() == 2:
             try:
-                if self.lineEdit_2.text() != "":
+                text = self.lineEdit_2.text()
+                if text == 'nan' or text == 'inf':
+                    raise exceptions.InvalidOperandException
+                if text != "" and text !='-':
                     float(self.lineEdit_2.text())
                 self.lineEdit_2.setStyleSheet("QLineEdit {background-color:white}")
+                if button_blocked != True:
+                    self.pushButton_3.setEnabled(True)
             except:
                 self.lineEdit_2.setStyleSheet("QLineEdit {background-color:red}")
                 self.lineEdit_2.setText("число")
+                self.pushButton_3.setEnabled(False)
 
     def selected_operation(self):
         self.operation = self.operations_manager.get_operation(self.comboBox.currentIndex())
