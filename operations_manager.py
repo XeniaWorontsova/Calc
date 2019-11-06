@@ -1,10 +1,7 @@
 import sys, inspect, glob, os
-from zope.interface.verify import verifyObject
 from zope.interface import providedBy
 from operations.interface_operation import IOperation
-import pyclbr
 import importlib
-import inspect
 
 class OperationsManager():
     def __init__(self):
